@@ -14,23 +14,25 @@ namespace LinuxBasicGraphic
         {
             dev = fb_device;
         }
-        Native.fb_fix_screeninfo FixedInfo
+        public Native.fb_fix_screeninfo FixedInfo
         {
             get
             {
                 var f = LibC.open(dev, LibC.O_RDONLY, 0);
                 Native.fb_fix_screeninfo finfo = new fb_fix_screeninfo();
                 LibC.ioctl(f, LibC.FBIOGET_FSCREENINFO, ref finfo);
+                LibC.close(f);
                 return finfo;
             }
         }
-        Native.fb_var_screeninfo VariableInfo
+        public Native.fb_var_screeninfo VariableInfo
         {
             get
             {
                 var f = LibC.open(dev, LibC.O_RDONLY, 0);
                 Native.fb_var_screeninfo finfo = new fb_var_screeninfo();
                 LibC.ioctl(f, LibC.FBIOGET_FSCREENINFO, ref finfo);
+                LibC.close(f);
                 return finfo;
             }
         }
